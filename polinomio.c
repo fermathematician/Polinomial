@@ -482,7 +482,7 @@ void acha_Raiz(struct Polinomio* p){
 					p->nR = p->nR + 1;
 					printf("\n mod = %.4\nf", mod(valor(p, d->r[i])));
 				}
-				else if(sinal_trocado(valor(p, d->r[i-1]+E), valor(p, d->r[i]-E))){
+				else if(sinal_trocado(valor(p, d->r[i-1]+10*E), valor(p, d->r[i]-10*E))){
 					//checa se P da proxima raiz da derivada é sinal contrário
 					p->r[p->nR] = raiz_Newton(p, d, (d->r[i]+d->r[i-1])/2);
 					p->nR = p->nR + 1;
@@ -496,19 +496,11 @@ void acha_Raiz(struct Polinomio* p){
 			printf("\nEntrou no final\n");
 			printf("\n última raiz de D = %.1f\n", d->r[d->nR-1]);
 			printf("\nP(+infty) = %.1f", lim_pos(p));
-
-
 			printf("\nP(%.3f) = %.3f", d->r[d->nR-1]+E, valor(p, d->r[d->nR-1]+E));
 	
 			//acha última
-			if(mod(valor(p, d->r[d->nR-1])) < E){
-				p->r[p->nR] = d->r[d->nR];
-				p->nR = p->nR + 1;
-				printf("\n mod = %.4f\n", mod(valor(p, d->r[i])));
-
-
-			}
-			else if(sinal_trocado(lim_pos(p), valor(p, d->r[d->nR-1]+E))){
+			
+			if(sinal_trocado(lim_pos(p), valor(p, d->r[d->nR-1]+10*E))){
 				p->r[p->nR] = raiz_Newton(p, d, d->r[d->nR] + 10);
 				p->nR = p->nR + 1;
 				printf("\nNewton do final\n");
