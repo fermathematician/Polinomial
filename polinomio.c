@@ -440,74 +440,42 @@ void acha_Raiz(struct Polinomio* p){
 		derivada(p, d);
 		acha_Raiz(d);
 
-		printr(d);
-		printf("\n");
-		printv(d);
-
-		printf("\n");
-		printf("\nD tem %d raizes", d->nR);
-
 		if(d->nR > 0){
-			printf("\nEntrou no primeiro\n");
-			//olha de -infty até primeira raiz da derivada
-			printf("\nP(-infty) = %.1f", lim_neg(p));
-
-			printf("\nP(%.3f) = %.3f",d->r[0]-E,  valor(p, d->r[0]-E));
-
-
+			
 			//checa se a raiz da derivada é a raiz do polinomio
 			if(mod(valor(p, d->r[0])) < E){
 				p->r[p->nR] = d->r[0];
 				p->nR = p->nR + 1;
-				printf("\n mod = %.1f", mod(valor(p, d->r[0])));
 			}
 			else if(sinal_trocado(lim_neg(p), valor(p, d->r[0]-E))){
 				//poe um valor pra derivada ser maior e encurtar caminho
 				p->r[p->nR] = raiz_Newton(p, d, d->r[d->nR] - 10);
 				p->nR = p->nR + 1;
-				printf("\n Newton do primeiro\n");
 			}
 		
 			//acha raízes do meio
-			printf("Entrou no loop\n");
 			for(i = 1; i < d->nR; i++){
-
-			printf("\nP(%.3f) = %.3f", d->r[i-1]+E, valor(p, d->r[i-1]+E));
-
-			printf("\nP(%.3f) = %.3f",d->r[i]-E, valor(d, d->r[i]-E));
-
+				
 			//checa se a raiz da derivada é a raiz do polinomio
 				if(mod(valor(p, d->r[i])) < E){
 					p->r[p->nR] = d->r[i];
 					p->nR = p->nR + 1;
-					printf("\n mod = %.4\nf", mod(valor(p, d->r[i])));
 				}
 				else if(sinal_trocado(valor(p, d->r[i-1]+10*E), valor(p, d->r[i]-10*E))){
 					//checa se P da proxima raiz da derivada é sinal contrário
 					p->r[p->nR] = raiz_Newton(p, d, (d->r[i]+d->r[i-1])/2);
-					p->nR = p->nR + 1;
-					printf("\nNewton do loop\n");
-					
+					p->nR = p->nR + 1;					
 				}
 
 		
 			}
-
-			printf("\nEntrou no final\n");
-			printf("\n última raiz de D = %.1f\n", d->r[d->nR-1]);
-			printf("\nP(+infty) = %.1f", lim_pos(p));
-			printf("\nP(%.3f) = %.3f", d->r[d->nR-1]+E, valor(p, d->r[d->nR-1]+E));
 	
 			//acha última
 			
 			if(sinal_trocado(lim_pos(p), valor(p, d->r[d->nR-1]+10*E))){
 				p->r[p->nR] = raiz_Newton(p, d, d->r[d->nR] + 10);
 				p->nR = p->nR + 1;
-				printf("\nNewton do final\n");
 			}
-
-			printf("\nP tem %d raizes\n", p->nR);
-
 
 		}
 		
